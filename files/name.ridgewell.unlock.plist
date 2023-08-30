@@ -6,13 +6,11 @@
 	<string>name.ridgewell.unlock</string>
 	<key>LaunchOnlyOnce</key>
 	<true/>
-	<key>OnDemand</key>
-	<false/>
+	<key>RunAtLoad</key>
+	<true/>
 	<key>Program</key>
 	<string>/Library/PrivilegedHelperTools/name.ridgewell.unlock</string>
 	<key>RunAtLoad</key>
 	<true/>
-	<key>ServiceDescription</key>
-	<string>Unlock encrypted volumes at boot</string>
 </dict>
 </plist>

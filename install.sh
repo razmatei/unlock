@@ -1,36 +1,6 @@
 #!/bin/bash
-if [[ `whoami` != "root" ]]; then
-# Run as root to avoid Console logging sudo commands.
-	echo "Attempting to re-run as root..."
-	curl -L https://raw.github.com/jridgewell/Unlock/master/install.sh -o install.sh
-	chmod +x install.sh
-
-	sudo bash ./install.sh
-	rm install.sh
-	exit
-fi
-
-mkdir tmp_install_unlock
-cd tmp_install_unlock
 
 echo "--------------------------"
-echo ""
-echo "Downloading..."
-# Download the needed files.
-curl -L "https://raw.github.com/jridgewell/Unlock/master/files/name.ridgewell.unlock.plist" -o name.ridgewell.unlock.plist
-curl -L "https://github.com/downloads/jridgewell/Unlock/name.ridgewell.unlock" --location -o name.ridgewell.unlock
-
-echo "--------------------------"
-echo ""
-echo "Installing..."
-# Move to the LaunchDaemons dir, and set permissions
-mkdir -p /Library/PrivilegedHelperTools/
-mv name.ridgewell.unlock.plist /Library/LaunchDaemons/
-mv name.ridgewell.unlock /Library/PrivilegedHelperTools/
-chown root:wheel /Library/LaunchDaemons/name.ridgewell.unlock.plist
-chown root:wheel /Library/PrivilegedHelperTools/name.ridgewell.unlock
-chmod 644 /Library/LaunchDaemons/name.ridgewell.unlock.plist
-chmod 755 /Library/PrivilegedHelperTools/name.ridgewell.unlock
 
 vname() { echo `diskutil cs info $1 | grep "Volume Name" | cut -d : -f 2 | sed -e 's/^\ *//'`; }
 unlock() {
@@ -52,10 +22,6 @@ ask() {
 	fi
 }
 
-if [ -d tmp_install_unlock ]; then
-# In case command was exited before
-	rm -r tmp_install_unlock
-fi
 boolUUID=false
 bootUUID=`diskutil cs info \`mount | grep " / " | cut -d " " -f 1\` 2>/dev/null | grep UUID | grep -v LV | cut -d : -f 2 | sed -e 's/^\ *//'`
 
@@ -85,10 +51,4 @@ while read LINE; do
 	fi
 done
 
-# Cleanup
-cd ..
-rm -r tmp_install_unlock
-
 echo "--------------------------"
-echo ""
-echo "Installed!"
