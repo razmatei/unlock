@@ -1,6 +1,18 @@
 #!/bin/bash
 
 echo "--------------------------"
+echo ""
+echo "Installing..."
+
+mkdir -p /Library/PrivilegedHelperTools/
+cp files/name.ridgewell.unlock.plist /Library/LaunchDaemons/
+cp files/name.ridgewell.unlock /Library/PrivilegedHelperTools/
+
+chown root:wheel /Library/LaunchDaemons/name.ridgewell.unlock.plist
+chown root:wheel /Library/PrivilegedHelperTools/name.ridgewell.unlock
+
+chmod 644 /Library/LaunchDaemons/name.ridgewell.unlock.plist
+chmod 755 /Library/PrivilegedHelperTools/name.ridgewell.unlock
 
 vname() { echo `diskutil cs info $1 | grep "Volume Name" | cut -d : -f 2 | sed -e 's/^\ *//'`; }
 unlock() {
@@ -52,3 +64,5 @@ while read LINE; do
 done
 
 echo "--------------------------"
+echo ""
+echo "Installed!"
